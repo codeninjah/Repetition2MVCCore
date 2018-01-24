@@ -27,7 +27,7 @@ namespace Repetition2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseInMemoryDatabase(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -40,7 +40,9 @@ namespace Repetition2
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env
+			, ApplicationDbContext context, UserManager<ApplicationUser> userManager,
+			RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -63,6 +65,8 @@ namespace Repetition2
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-        }
+
+			DbSeeder.Seeder(context,userManager,roleManager);
+		}
     }
 }
