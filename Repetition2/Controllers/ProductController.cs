@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Repetition2.Data;
 using Repetition2.Models;
 
@@ -13,10 +14,12 @@ namespace Repetition2.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
+		private readonly ILogger<ProductController> _logger;
 
-        public ProductController(ApplicationDbContext context)
+		public ProductController(ApplicationDbContext context, ILogger<ProductController> logger)
         {
-            _context = context;
+			_logger = logger;
+			_context = context;
         }
 
         // GET: Product
@@ -59,7 +62,8 @@ namespace Repetition2.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+				_logger.LogWarning("Du har skapat en produkt.");
+				_context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

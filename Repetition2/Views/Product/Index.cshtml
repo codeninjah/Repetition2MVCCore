@@ -44,11 +44,11 @@
                 @Html.DisplayFor(modelItem => item.IsDeleted)
             </td>
 			<td>
-				<a asp-action="Edit" asp-route-id="@item.ProductID">Edit</a> |
-				<a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
+				<a asp-action="Edit" asp-route-id="@item.ProductID" asp-route-slug="@Repetition2.Utils.Slug.Slugify(item.Name)">Edit</a> |
+				<a asp-action="Details" asp-route-id="@item.ProductID"asp-route-slug="@Repetition2.Utils.Slug.Slugify(item.Name)">Details</a> |
 				@if (User.IsInRole("Admin"))
 				{
-				<a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
+				<a asp-action="Delete" asp-route-id="@item.ProductID"asp-route-slug="@Repetition2.Utils.Slug.Slugify(item.Name)">Delete</a>
 				}
 			</td>
         </tr>
