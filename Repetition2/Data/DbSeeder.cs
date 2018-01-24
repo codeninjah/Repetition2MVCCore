@@ -9,6 +9,8 @@ namespace Repetition2.Data
 {
     public class DbSeeder
     {
+		public static object Products { get; private set; }
+
 		public static void Seeder(ApplicationDbContext context, UserManager<ApplicationUser> userManager,
 			RoleManager<IdentityRole> roleManager)
 		{
@@ -33,18 +35,19 @@ namespace Repetition2.Data
 			if (!context.Roles.Any())
 			{
 				var admin = new IdentityRole { Name = "Admin" };
-				var result = roleManager.CreateAsync(admin);
+				var result = roleManager.CreateAsync(admin).Result;
 			}
 
 			if (!context.Users.Any())
 			{
-				var admin = new ApplicationUser { UserName = "Admin", Email = "admin@test.com" };
+				var admin = new ApplicationUser { UserName = "admin@test.com", Email = "admin@test.com" };
 				var resultadmin = userManager.CreateAsync(admin, "Test-123").Result;
 				var roleResultadmin = userManager.AddToRoleAsync(admin, "Admin").Result;
 
-				var user = new ApplicationUser { UserName = "Student", Email = "student@test.com" };
+				var user = new ApplicationUser { UserName = "student@test.com", Email = "student@test.com" };
 				var result = userManager.CreateAsync(user, "Test-123").Result;
 				//var roleResult = userManager.AddToRoleAsync(user, "Student").Result;
+
 			}
 		}
     }

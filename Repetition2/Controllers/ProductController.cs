@@ -22,8 +22,8 @@ namespace Repetition2.Controllers
         // GET: Product
         public async Task<IActionResult> Index()
         {
-			
-            return View(await _context.Product.ToListAsync());
+			//ADDED "OrderBy(p => p.Name)"
+            return View(await _context.Product.OrderBy(p => p.Name).ToListAsync());
         }
 
         // GET: Product/Details/5

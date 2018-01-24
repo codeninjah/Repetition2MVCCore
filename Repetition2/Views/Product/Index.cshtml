@@ -32,11 +32,8 @@
 
         <tr>
 			<td>
-	
+				@Html.DisplayFor(modelItem => item.Name)
 			</td>
-            <td>
-				
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UnitPrice)
             </td>
@@ -46,11 +43,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsDeleted)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
-            </td>
+			<td>
+				<a asp-action="Edit" asp-route-id="@item.ProductID">Edit</a> |
+				<a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
+				@if (User.IsInRole("Admin"))
+				{
+				<a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
+				}
+			</td>
         </tr>
 }
     </tbody>
